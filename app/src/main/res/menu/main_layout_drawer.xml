@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/add"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Add New User" />
+
+    </group>
+
+    <item android:title="Phòng Ban">
+        <menu>
+            <item
+                android:id="@+id/pDEV"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Phòng DEV" />
+            <item
+                android:id="@+id/pTT"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Phòng TT" />
+
+            <item
+                android:id="@+id/pQLNS"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Phòng QLNS" />
+
+            <item
+                android:id="@+id/pTCKT"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Phòng TCKT" />
+
+        </menu>
+    </item>
+
+    <item android:title="My Info Manager">
+        <menu>
+            <item
+                android:id="@+id/infor"
+                android:icon="@drawable/ic_menu_send"
+                android:title="My Information" />
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+</menu>
