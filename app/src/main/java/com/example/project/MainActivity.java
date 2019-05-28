@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView imageAvatar;
     byte[] bytes;
 
-    EditText  tenNV, email, maNV, noiO, soDT;
-    Spinner phongBan, bangCap, gioiTinh;
+//    EditText  tenNV, email, maNV, noiO, soDT;
+//    Spinner phongBan, bangCap, gioiTinh;
     FirebaseDatabase database;
-    DatabaseReference myRef;
+    public DatabaseReference myRef;
     User user;
     private FragmentManager fragmentManager;
     AddUser addUser;
@@ -61,14 +61,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        bangCap = addUser.bangCap.getSelectedItem().toString();
 
 
-        maNV = (EditText) findViewById(R.id.edtMaNV);
-        tenNV = findViewById(R.id.edtName);
-        email = findViewById(R.id.edtEmail);
-        noiO = findViewById(R.id.edtNoiO);
-        soDT = findViewById(R.id.edtSoDT);
-        gioiTinh = findViewById(R.id.spnGioiTinh);
-        phongBan = findViewById(R.id.spnPhongBan);
-        bangCap = findViewById(R.id.spnBangCap);
+//        maNV = (EditText) findViewById(R.id.edtMaNV);
+//        tenNV = findViewById(R.id.edtName);
+//        email = findViewById(R.id.edtEmail);
+//        noiO = findViewById(R.id.edtNoiO);
+//        soDT = findViewById(R.id.edtSoDT);
+//        gioiTinh = findViewById(R.id.spnGioiTinh);
+//        phongBan = findViewById(R.id.spnPhongBan);
+//        bangCap = findViewById(R.id.spnBangCap);
 
 
         user = new User();
@@ -96,42 +96,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-    private void getValues(){
-//        Toast.makeText(this, maNV.getText().toString(), Toast.LENGTH_SHORT).show();
-//        user.setTenNV(tenNV.getText().toString());
-//        user.setEmail(email.getText().toString());
-//        user.setsNoiO(noiO.getText().toString());
-//        user.setSoDT(soDT.getText().toString());
-//        user.setGioiTinh(gioiTinh.getSelectedItem().toString());
-//        user.setBangCap(bangCap.getSelectedItem().toString());
-//        user.setsPhongBan(phongBan.getSelectedItem().toString());
 
-//        user.setMaNV("01");
-//        user.setTenNV("NDH");
-//        user.setsPhongBan("CNTT");
-//        user.setGioiTinh("Nam");
-//        user.setEmail("hieunguyenductt6@gmail.com");
-//        user.setBangCap("Trungcap");
-//        user.setSoDT("0785589181");
-//        user.setsNoiO("LD");
-    }
 
-    public void btnInsert(View view){
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //myRef.setValue(null);
-                getValues();
-                //myRef.child(user.getMaNV()).setValue(user);
-                //Toast.makeText(MainActivity.this, user.getMaNV(), Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     @Override
     public void onBackPressed() {
