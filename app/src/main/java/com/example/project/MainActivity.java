@@ -45,54 +45,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 //    EditText  tenNV, email, maNV, noiO, soDT;
 //    Spinner phongBan, bangCap, gioiTinh;
-    FirebaseDatabase database;
+//    FirebaseDatabase database;
     public DatabaseReference myRef;
-    User user;
+//    User user;
     private FragmentManager fragmentManager;
     Fragment fragment = null;
-    AddUserFragment addUser;
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private List<User> myDataset = new ArrayList<>();
+//    AddUserFragment addUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
 
-        user = new User();
+//        user = new User();
         myRef = FirebaseDatabase.getInstance().getReference("User");
 
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        recyclerView.setHasFixedSize(true);
-        // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset);
-        recyclerView.setAdapter(mAdapter);
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                myDataset.clear();
-                for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                    try{
-                        User user = messageSnapshot.getValue(User.class);
-                        myDataset.add(user);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
-                mAdapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                //todo
-            }
-        });
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                //todo
+//            }
+//        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -117,22 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         showHome();
 
-        Query query = myRef.orderByChild("sPhongBan").equalTo("CNTT");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                        Log.d("issue","issue"+ issue)  ;  // do with your result
-                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @Override
@@ -159,8 +122,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager.beginTransaction().replace(R.id.content, fragment, fragment.getTag()).commit();
     }
 
-    private void showAllUsers(){
-        fragment = new AllUserFragment();
+    private void showAllUsers(String phongban){
+        fragment = new AllUserFragment(phongban);
         if(fragmentManager == null){
             fragmentManager = getSupportFragmentManager();
         }
@@ -196,15 +159,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.add) {
             showAddUser();
         } else if (id == R.id.pDEV) {
-            showAllUsers();
-            Toast.makeText(this, "pDEV", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.pQLNS) {
-            Toast.makeText(this, "pTT", Toast.LENGTH_SHORT).show();
+            showAllUsers("CNTT");
+//            Toast.makeText(this, "pDEV", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.pTT) {
-            Toast.makeText(this, "pQLNS", Toast.LENGTH_SHORT).show();
+            showAllUsers("pTT");
+//            Toast.makeText(this, "pTT", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.pQLNS) {
+            showAllUsers("Nhân Sự");
+//            Toast.makeText(this, "pQLNS", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.pTCKT) {
-            Toast.makeText(this, "pTCKT", Toast.LENGTH_SHORT).show();
+            showAllUsers("Kế ");
+//            Toast.makeText(this, "pTCKT", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.infor) {
+            showAllUsers("infor");
         }
         else if (id == R.id.logout) {
             Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
