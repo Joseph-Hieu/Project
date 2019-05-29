@@ -9,6 +9,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,12 +27,17 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.project.Fragment.AddUser;
+import com.example.project.Fragment.HomeFragment;
+import com.example.project.adapter.MyAdapter;
 import com.example.project.object.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,36 +51,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public DatabaseReference myRef;
     User user;
     private FragmentManager fragmentManager;
+    Fragment fragment = null;
     AddUser addUser;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private List<User> myDataset = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
 
-//        user.setMaNV(addUser.maNV.getText().toString());
-//        tenNV = addUser.tenNV.getText().toString();
-//        email = addUser.email.getText().toString();
-//        noiO = addUser.noiO.getText().toString();
-//        soDT = addUser.soDT.getText().toString();
-//        gioiTinh = addUser.gioiTinh.getSelectedItem().toString();
-//        phongBan = addUser.phongBan.getSelectedItem().toString();
-//        bangCap = addUser.bangCap.getSelectedItem().toString();
-
-
-//        maNV = (EditText) findViewById(R.id.edtMaNV);
-//        tenNV = findViewById(R.id.edtName);
-//        email = findViewById(R.id.edtEmail);
-//        noiO = findViewById(R.id.edtNoiO);
-//        soDT = findViewById(R.id.edtSoDT);
-//        gioiTinh = findViewById(R.id.spnGioiTinh);
-//        phongBan = findViewById(R.id.spnPhongBan);
-//        bangCap = findViewById(R.id.spnBangCap);
-
-
         user = new User();
         myRef = FirebaseDatabase.getInstance().getReference("User");
 
+        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        recyclerView.setHasFixedSize(true);
+        // use a linear layout manager
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        // specify an adapter (see also next example)
+        mAdapter = new MyAdapter(myDataset);
+        recyclerView.setAdapter(mAdapter);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                myDataset.clear();
+                for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                    try{
+                        User user = messageSnapshot.getValue(User.class);
+                        myDataset.add(user);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //todo
+            }
+        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -95,19 +116,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
 
-
-
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        showHome();
     }
 
     @Override
@@ -120,12 +130,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showHome(){
+        fragment = new HomeFragment();
+        if (fragment != null){
+            fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content, fragment, fragment.getTag()).commit();
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        }else {
+            if (fragment instanceof HomeFragment){
+                super.onBackPressed();
+            }else {
+                showHome();
+            }
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -135,9 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.add) {
-            fragmentManager = getSupportFragmentManager();
-            AddUser addUser = new AddUser();
-            fragmentManager.beginTransaction().replace(R.id.content, addUser, addUser.getTag()).commit();
+            fragment = new AddUser();
         } else if (id == R.id.pDEV) {
             Toast.makeText(this, "pDEV", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.pQLNS) {
@@ -147,10 +174,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.pTCKT) {
             Toast.makeText(this, "pTCKT", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.infor) {
-            Toast.makeText(this, "My Infor", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.logout) {
             Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+        }
+
+        if (fragment != null){
+            fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content, fragment, fragment.getTag()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

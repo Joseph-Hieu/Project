@@ -9,4 +9,8 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main_layout">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

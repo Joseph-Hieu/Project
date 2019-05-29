@@ -21,6 +21,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
+
 
 public class AddUser extends Fragment {
 
@@ -31,6 +33,10 @@ public class AddUser extends Fragment {
 
     public AddUser() {
         // Required empty public constructor
+    }
+
+    public boolean onBackPressed() {
+        return false;
     }
 
     @Override
@@ -60,7 +66,7 @@ public class AddUser extends Fragment {
     }
     private void getValues(){
         user = new User();
-        Toast.makeText(getActivity(), maNV.getText().toString(), Toast.LENGTH_SHORT).show();
+        user.setMaNV(maNV.getText().toString());
         user.setTenNV(tenNV.getText().toString());
         user.setEmail(email.getText().toString());
         user.setsNoiO(noiO.getText().toString());
@@ -69,31 +75,20 @@ public class AddUser extends Fragment {
         user.setBangCap(bangCap.getSelectedItem().toString());
         user.setsPhongBan(phongBan.getSelectedItem().toString());
 
-        user.setMaNV("01");
-        user.setTenNV("NDH");
-        user.setsPhongBan("CNTT");
-        user.setGioiTinh("Nam");
-        user.setEmail("hieunguyenductt6@gmail.com");
-        user.setBangCap("Trungcap");
-        user.setSoDT("0785589181");
-        user.setsNoiO("LD");
+//        user.setTenNV("NDH");
+//        user.setsPhongBan("CNTT");
+//        user.setGioiTinh("Nam");
+//        user.setEmail("hieunguyenductt6@gmail.com");
+//        user.setBangCap("Trungcap");
+//        user.setSoDT("0785589181");
+//        user.setsNoiO("LD");
     }
 
 
     public void btnInsert(){
-        ((MainActivity) getActivity()).myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //myRef.setValue(null);
-                getValues();
-                ((MainActivity) getActivity()).myRef.child(user.getMaNV()).setValue(user);
-                Toast.makeText(getActivity(), user.getMaNV(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        getValues();
+        ((MainActivity) getActivity()).myRef.child(user.getMaNV()).setValue(user);
     }
+
+
 }
