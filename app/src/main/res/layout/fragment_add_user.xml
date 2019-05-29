@@ -77,7 +77,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
@@ -122,8 +122,8 @@
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/spnBangCap"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:autofillHints="Bằng Cấp"
+                        android:layout_height="50dp"
+                        android:autofillHints="Bằng "
                         android:entries="@array/spiner_bangCap" />
 
                     <View
@@ -180,7 +180,7 @@
                     android:textAllCaps="true"
                     android:textColor="#ffffff"
                     android:textSize="20sp"
-                    app:backgroundTint="#32a024" />
+                    app:backgroundTint="@color/colorPrimary" />
             </LinearLayout>
         </LinearLayout>
 
