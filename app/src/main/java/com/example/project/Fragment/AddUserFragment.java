@@ -1,11 +1,13 @@
 package com.example.project.Fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +24,20 @@ import androidx.fragment.app.Fragment;
 import com.example.project.MainActivity;
 import com.example.project.R;
 import com.example.project.object.User;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 import gun0912.tedbottompicker.TedBottomPicker;
@@ -35,13 +46,13 @@ import gun0912.tedbottompicker.TedBottomSheetDialogFragment;
 
 public class AddUserFragment extends Fragment {
     private static final int REQUEST = 1001;
-    String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE};
 
     public Spinner phongBan, bangCap, gioiTinh;
     public EditText tenNV, email, maNV, noiO, soDT;
     public MaterialButton register;
     private User user;
     private ImageView imgAvatar;
+    private UploadTask uploadTask;
 
     public AddUserFragment() {
         // Required empty public constructor
@@ -85,7 +96,7 @@ public class AddUserFragment extends Fragment {
     private void showGallery() {
 
         if (Build.VERSION.SDK_INT >= 23) {
-            String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA};
             if (!hasPermissions( getContext(), PERMISSIONS)) {
                 ActivityCompat.requestPermissions((Activity)  getContext(), PERMISSIONS, REQUEST );
             } else {
@@ -93,8 +104,7 @@ public class AddUserFragment extends Fragment {
                         .show(new TedBottomSheetDialogFragment.OnImageSelectedListener() {
                             @Override
                             public void onImageSelected(Uri uri) {
-                                // here is selected image uri
-                                // upload image
+                                uploadImage(uri.getPath());
                             }
                         });
             }
@@ -105,10 +115,42 @@ public class AddUserFragment extends Fragment {
                         public void onImageSelected(Uri uri) {
                             // here is selected image uri
                             // upload image
+                            uploadImage(uri.getPath());
                         }
                     });
         }
 
+
+    }
+
+    private void uploadImage(String path){
+        if(path == null || path.isEmpty()){
+            return;
+        }
+        Toast.makeText(getContext(), "Uploading...",Toast.LENGTH_LONG).show();
+        // here is selected image uri
+        Uri file = Uri.fromFile(new File(path));
+        StorageReference imgReference = ((MainActivity) getActivity()).storageRef.child("images/"+file.getLastPathSegment());
+        uploadTask = imgReference.putFile(file);
+
+        // Register observers to listen for when the download is done or if it fails
+        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                return imgReference.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri taskResult = task.getResult();
+                    Picasso.get().load(taskResult.toString()).into(imgAvatar);
+                }
+            }
+        });
 
     }
 

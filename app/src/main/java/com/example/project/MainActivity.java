@@ -33,6 +33,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public StorageReference storageRef;
     ImageView imageAvatar;
     byte[] bytes;
 
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 //        user = new User();
         myRef = FirebaseDatabase.getInstance().getReference("User");
+        storageRef = FirebaseStorage.getInstance().getReference("Images");
 
 //        myRef.addValueEventListener(new ValueEventListener() {
 //            @Override
