@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.project.MainActivity;
 import com.example.project.R;
 import com.example.project.object.User;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -28,7 +29,7 @@ public class AddUser extends Fragment {
 
     public Spinner phongBan, bangCap, gioiTinh;
     public EditText tenNV, email, maNV, noiO, soDT;
-    public Button register;
+    public MaterialButton register;
     private User user;
 
     public AddUser() {
