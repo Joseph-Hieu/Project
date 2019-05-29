@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +12,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.project.MainActivity;
 import com.example.project.R;
 import com.example.project.object.User;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -24,14 +25,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 
 
-public class AddUser extends Fragment {
+public class AddUserFragment extends Fragment {
 
     public Spinner phongBan, bangCap, gioiTinh;
     public EditText tenNV, email, maNV, noiO, soDT;
-    public Button register;
+    public MaterialButton register;
     private User user;
 
-    public AddUser() {
+    public AddUserFragment() {
         // Required empty public constructor
     }
 

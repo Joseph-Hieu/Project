@@ -1,39 +1,37 @@
 package com.example.project;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.constraint.Placeholder;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.project.Fragment.AddUser;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.project.Fragment.AddUserFragment;
+import com.example.project.Fragment.AllUserFragment;
 import com.example.project.Fragment.HomeFragment;
 import com.example.project.adapter.MyAdapter;
 import com.example.project.object.User;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -52,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     User user;
     private FragmentManager fragmentManager;
     Fragment fragment = null;
-    AddUser addUser;
+    AddUserFragment addUser;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -118,6 +116,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         showHome();
+
+        Query query = myRef.orderByChild("sPhongBan").equalTo("CNTT");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                        Log.d("issue","issue"+ issue)  ;  // do with your result
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -138,14 +153,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void showHome(){
         fragment = new HomeFragment();
-        if (fragment != null){
+        if(fragmentManager == null){
             fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content, fragment, fragment.getTag()).commit();
         }
+        fragmentManager.beginTransaction().replace(R.id.content, fragment, fragment.getTag()).commit();
+    }
+
+    private void showAllUsers(){
+        fragment = new AllUserFragment();
+        if(fragmentManager == null){
+            fragmentManager = getSupportFragmentManager();
+        }
+        fragmentManager.beginTransaction().replace(R.id.content, fragment, fragment.getTag()).commit();
+    }
+    private void showAddUser(){
+        fragment = new AddUserFragment();
+        if(fragmentManager == null){
+            fragmentManager = getSupportFragmentManager();
+        }
+        fragmentManager.beginTransaction().replace(R.id.content, fragment, fragment.getTag()).commit();
     }
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if(drawer.isDrawerOpen(GravityCompat.START)){
             drawer.closeDrawer(GravityCompat.START);
         }else {
@@ -164,8 +194,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.add) {
-            fragment = new AddUser();
+            showAddUser();
         } else if (id == R.id.pDEV) {
+            showAllUsers();
             Toast.makeText(this, "pDEV", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.pQLNS) {
             Toast.makeText(this, "pTT", Toast.LENGTH_SHORT).show();

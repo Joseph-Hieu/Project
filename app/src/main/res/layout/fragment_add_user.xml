@@ -3,114 +3,186 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    tools:context=".Fragment.AddUser">
+    android:background="#ffffff">
 
-    <LinearLayout
+    <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
 
-            <ImageView
-                android:id="@+id/imgAvatar"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/image" />
-        </LinearLayout>
+            android:padding="10dp"
+            tools:context=".Fragment.AddUserFragment">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="10"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/edtMaNV"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:hint="Mã NV"
-                android:inputType="text" />
-
-            <EditText
-                android:id="@+id/edtName"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:hint="Họ và tên" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center">
 
-                <Spinner
-                    android:id="@+id/spnGioiTinh"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.3"
-                    android:entries="@array/spiner_gioiTinh" />
-
-                <Spinner
-                    android:id="@+id/spnPhongBan"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:entries="@array/spiner_ban" />
+                <ImageView
+                    android:id="@+id/imgAvatar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="20dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/image" />
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/edtEmail"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:hint="Email" />
+                android:layout_height="wrap_content"
+                app:cardUseCompatPadding="true">
 
-            <Spinner
-                android:id="@+id/spnBangCap"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:hint="Mã NV">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtMaNV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#ffffff"
+                            android:inputType="text"
+                            android:lines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Họ và tên">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#ffffff"
+                            android:lines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/spnGioiTinh"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.3"
+                            android:hint="Giới "
+                            android:entries="@array/spiner_gioiTinh" />
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/spnPhongBan"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:hint="Phòng "
+                            android:entries="@array/spiner_ban" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#f3f3f3" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#ffffff"
+                            android:inputType="textEmailAddress"
+                            android:lines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/spnBangCap"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:autofillHints="Bằng "
+                        android:entries="@array/spiner_bangCap" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#f3f3f3" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Số điện thoại">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtSoDT"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#ffffff"
+                            android:inputType="number"
+                            android:lines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nơi ở">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtNoiO"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#ffffff"
+                            android:lines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:entries="@array/spiner_bangCap" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1.2">
 
-            <EditText
-                android:id="@+id/edtSoDT"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:hint="Số điện thoại"
-                android:inputType="number" />
-
-            <EditText
-                android:id="@+id/edtNoiO"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:hint="Nơi ở"
-                android:inputType="text" />
-
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddUser"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+                    android:text="Thêm"
+                    android:textAllCaps="true"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"
+                    app:backgroundTint="@color/colorPrimary" />
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.2">
-
-            <Button
-                android:id="@+id/btnAddUser"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Thêm"
-                />
-        </LinearLayout>
-    </LinearLayout>
-
+    </ScrollView>
 </LinearLayout>
