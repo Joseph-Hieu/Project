@@ -15,7 +15,7 @@
             android:orientation="vertical"
 
             android:padding="10dp"
-            tools:context=".Fragment.AddUser">
+            tools:context=".Fragment.AddUserFragment">
 
 
             <LinearLayout

@@ -19,7 +19,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.project.Fragment.AddUser;
+import com.example.project.Fragment.AddUserFragment;
+import com.example.project.Fragment.AllUserFragment;
 import com.example.project.Fragment.HomeFragment;
 import com.example.project.adapter.MyAdapter;
 import com.example.project.object.User;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     User user;
     private FragmentManager fragmentManager;
     Fragment fragment = null;
-    AddUser addUser;
+    AddUserFragment addUser;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -157,6 +158,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         fragmentManager.beginTransaction().replace(R.id.content, fragment, fragment.getTag()).commit();
     }
+
+    private void showAllUsers(){
+        fragment = new AllUserFragment();
+        if(fragmentManager == null){
+            fragmentManager = getSupportFragmentManager();
+        }
+        fragmentManager.beginTransaction().replace(R.id.content, fragment, fragment.getTag()).commit();
+    }
+    private void showAddUser(){
+        fragment = new AddUserFragment();
+        if(fragmentManager == null){
+            fragmentManager = getSupportFragmentManager();
+        }
+        fragmentManager.beginTransaction().replace(R.id.content, fragment, fragment.getTag()).commit();
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -178,8 +194,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.add) {
-            fragment = new AddUser();
+            showAddUser();
         } else if (id == R.id.pDEV) {
+            showAllUsers();
             Toast.makeText(this, "pDEV", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.pQLNS) {
             Toast.makeText(this, "pTT", Toast.LENGTH_SHORT).show();

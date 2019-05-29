@@ -25,14 +25,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 
 
-public class AddUser extends Fragment {
+public class AddUserFragment extends Fragment {
 
     public Spinner phongBan, bangCap, gioiTinh;
     public EditText tenNV, email, maNV, noiO, soDT;
     public MaterialButton register;
     private User user;
 
-    public AddUser() {
+    public AddUserFragment() {
         // Required empty public constructor
     }
 
