@@ -28,7 +28,9 @@ import java.util.List;
 
 public class AllUserFragment extends Fragment {
 
-    public Spinner phongBan, bangCap, gioiTinh;
+    public String phongBan = "CNTT";
+    public Spinner bangCap;
+    public Spinner gioiTinh;
     public EditText tenNV, email, maNV, noiO, soDT;
     public MaterialButton register;
     private User user;
@@ -37,7 +39,8 @@ public class AllUserFragment extends Fragment {
     private List<User> myDataset = new ArrayList<>();
     private MyAdapter mAdapter;
 
-    public AllUserFragment() {
+    public AllUserFragment(String phongban) {
+        this.phongBan = phongban;
         // Required empty public constructor
     }
 
@@ -66,12 +69,12 @@ public class AllUserFragment extends Fragment {
         mAdapter = new MyAdapter(myDataset);
         recyclerView.setAdapter(mAdapter);
 
-        Query query = ((MainActivity)getActivity()).myRef.orderByChild("sPhongBan").equalTo("CNTT");
+        Query query = ((MainActivity)getActivity()).myRef.orderByChild("sPhongBan").equalTo(phongBan);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                myDataset.clear();
                 if (dataSnapshot.exists()) {
-                    myDataset.clear();
                     for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                         try{
                             User user = messageSnapshot.getValue(User.class);
@@ -80,6 +83,8 @@ public class AllUserFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
+                    mAdapter.notifyDataSetChanged();
+                }else{
                     mAdapter.notifyDataSetChanged();
                 }
             }

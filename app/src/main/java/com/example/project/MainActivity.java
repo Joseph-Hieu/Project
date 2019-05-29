@@ -122,8 +122,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager.beginTransaction().replace(R.id.content, fragment, fragment.getTag()).commit();
     }
 
-    private void showAllUsers(){
-        fragment = new AllUserFragment();
+    private void showAllUsers(String phongban){
+        fragment = new AllUserFragment(phongban);
         if(fragmentManager == null){
             fragmentManager = getSupportFragmentManager();
         }
@@ -159,15 +159,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.add) {
             showAddUser();
         } else if (id == R.id.pDEV) {
-            showAllUsers();
-            Toast.makeText(this, "pDEV", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.pQLNS) {
-            Toast.makeText(this, "pTT", Toast.LENGTH_SHORT).show();
+            showAllUsers("CNTT");
+//            Toast.makeText(this, "pDEV", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.pTT) {
-            Toast.makeText(this, "pQLNS", Toast.LENGTH_SHORT).show();
+            showAllUsers("pTT");
+//            Toast.makeText(this, "pTT", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.pQLNS) {
+            showAllUsers("Nhân Sự");
+//            Toast.makeText(this, "pQLNS", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.pTCKT) {
-            Toast.makeText(this, "pTCKT", Toast.LENGTH_SHORT).show();
+            showAllUsers("Kế ");
+//            Toast.makeText(this, "pTCKT", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.infor) {
+            showAllUsers("infor");
         }
         else if (id == R.id.logout) {
             Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
