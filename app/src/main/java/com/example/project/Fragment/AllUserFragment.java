@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -73,6 +74,7 @@ public class AllUserFragment extends Fragment {
             public void longClickListener(String sMa) {
                 ((MainActivity)getActivity()).myRef.child(sMa).removeValue();
                 Log.d("mainactivty","Delete " + sMa + " succesfully");
+                Toast.makeText(getContext(), "xoa thanh cong " +sMa, Toast.LENGTH_SHORT).show();
                 queryData();
             }
         });
