@@ -71,7 +71,7 @@ public class AllUserFragment extends Fragment {
         mAdapter = new MyAdapter(myDataset, new ItemLongClickListener() {
             @Override
             public void longClickListener(String sMa) {
-                ((MainActivity)getActivity()).myRef.child("User").child(sMa).removeValue();
+                ((MainActivity)getActivity()).myRef.child(sMa).removeValue();
                 Log.d(getTag(),"Delete " + maNV + " succesfully");
             }
         });

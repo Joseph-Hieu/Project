@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -147,7 +148,7 @@ public class AddUserFragment extends Fragment {
         user.setGioiTinh(gioiTinh.getSelectedItem().toString());
         user.setBangCap(bangCap.getSelectedItem().toString());
         user.setsPhongBan(phongBan.getSelectedItem().toString());
-
+        Log.d("user","user" + user.toString());
 //        user.setTenNV("NDH");
 //        user.setsPhongBan("CNTT");
 //        user.setGioiTinh("Nam");

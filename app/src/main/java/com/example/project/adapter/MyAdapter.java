@@ -30,9 +30,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public TextView sdt;
         public TextView email;
         public TextView phongban;
+        public View root;
 
         public MyViewHolder(View v) {
             super(v);
+            root = v.findViewById(R.id.mssv);
             mssv = v.findViewById(R.id.mssv);
             name = v.findViewById(R.id.name);
             gioitinh = v.findViewById(R.id.gioitinh);
@@ -73,7 +75,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.email.setText(mDataset.get(position).getEmail());
         holder.phongban.setText(mDataset.get(position).getsPhongBan());
 
-        listener.longClickListener(mDataset.get(position).getMaNV());
+        holder.root.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                listener.longClickListener(mDataset.get(position).getMaNV());
+                return false;
+            }
+        });
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
