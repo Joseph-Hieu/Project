@@ -34,7 +34,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         public MyViewHolder(View v) {
             super(v);
-            root = v.findViewById(R.id.mssv);
+            root = v.findViewById(R.id.root);
             mssv = v.findViewById(R.id.mssv);
             name = v.findViewById(R.id.name);
             gioitinh = v.findViewById(R.id.gioitinh);
@@ -79,7 +79,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             @Override
             public boolean onLongClick(View v) {
                 listener.longClickListener(mDataset.get(position).getMaNV());
-                return false;
+                return true;
             }
         });
 
