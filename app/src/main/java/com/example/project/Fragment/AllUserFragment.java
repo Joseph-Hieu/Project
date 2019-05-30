@@ -73,10 +73,15 @@ public class AllUserFragment extends Fragment {
             public void longClickListener(String sMa) {
                 ((MainActivity)getActivity()).myRef.child(sMa).removeValue();
                 Log.d("mainactivty","Delete " + sMa + " succesfully");
+                queryData();
             }
         });
         recyclerView.setAdapter(mAdapter);
 
+        queryData();
+    }
+
+    private void queryData(){
         Query query = ((MainActivity)getActivity()).myRef.orderByChild("sPhongBan").equalTo(phongBan);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -103,6 +108,4 @@ public class AllUserFragment extends Fragment {
             }
         });
     }
-
-
 }
