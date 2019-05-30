@@ -72,7 +72,7 @@ public class AllUserFragment extends Fragment {
             @Override
             public void longClickListener(String sMa) {
                 ((MainActivity)getActivity()).myRef.child(sMa).removeValue();
-                Log.d(getTag(),"Delete " + maNV + " succesfully");
+                Log.d("mainactivty","Delete " + maNV + " succesfully");
             }
         });
         recyclerView.setAdapter(mAdapter);
