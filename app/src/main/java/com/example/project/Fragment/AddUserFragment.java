@@ -162,6 +162,8 @@ public class AddUserFragment extends Fragment {
     public void btnInsert(){
         getValues();
         ((MainActivity)getActivity()).myRef.child(user.getMaNV()).setValue(user);
+        Toast.makeText(getContext(), "add thanh cong", Toast.LENGTH_SHORT).show();
+        onBackPressed();
     }
 
 
