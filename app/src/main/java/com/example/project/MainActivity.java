@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             showAllUsers("Nhân Sự");
 //            Toast.makeText(this, "pQLNS", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.pTCKT) {
-            showAllUsers("Kế ");
+            showAllUsers("Kế Toán");
 //            Toast.makeText(this, "pTCKT", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.infor) {
             showAllUsers("infor");
