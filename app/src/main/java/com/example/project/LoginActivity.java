@@ -1,11 +1,13 @@
 package com.example.project;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -47,6 +49,21 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Vui lòng chờ...");
         progressDialog.show();
 
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        if (email.equals("admin@gmail.com") && password.equals("admin")){
+                            Intent intent =new Intent(getApplicationContext(),MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                            progressDialog.dismiss();
+                        }else{
+                            progressDialog.dismiss();
+                            String mesg = String.format("Login fail!!", false);
+                            Toast.makeText(getApplicationContext(),mesg, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, 2000);
         eEmail.getText().clear();
         ePassword.getText().clear();
 

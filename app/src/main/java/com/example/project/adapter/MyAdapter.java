@@ -5,8 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project.ItemLongClickListener;
+import com.example.project.MainActivity;
 import com.example.project.R;
 import com.example.project.object.User;
 
@@ -14,11 +17,12 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private List<User> mDataset;
+    private ItemLongClickListener listener;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
         // each data item is just a string in this case
         public TextView mssv;
         public TextView name;
@@ -36,11 +40,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             email = v.findViewById(R.id.email);
             phongban = v.findViewById(R.id.phongban);
         }
+
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<User> myDataset) {
+    public MyAdapter(List<User> myDataset, ItemLongClickListener _listener) {
         mDataset = myDataset;
+        this.listener = _listener;
     }
 
     // Create new views (invoked by the layout manager)
@@ -50,6 +56,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.user_view, parent, false);
+
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
@@ -66,6 +73,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.email.setText(mDataset.get(position).getEmail());
         holder.phongban.setText(mDataset.get(position).getsPhongBan());
 
+        listener.longClickListener(mDataset.get(position).getMaNV());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

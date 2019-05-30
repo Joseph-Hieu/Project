@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/add"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_person_add_black_24dp"
             android:title="Add New User" />
 
     </group>
@@ -15,21 +15,21 @@
         <menu>
             <item
                 android:id="@+id/pDEV"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_code_black_24dp"
                 android:title="Phòng DEV" />
             <item
                 android:id="@+id/pTT"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_people_black_24dp"
                 android:title="Phòng TT" />
 
             <item
                 android:id="@+id/pQLNS"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/ic_supervisor_account_black_24dp"
                 android:title="Phòng QLNS" />
 
             <item
                 android:id="@+id/pTCKT"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_monetization_on_black_24dp"
                 android:title="Phòng TCKT" />
 
         </menu>
@@ -43,7 +43,7 @@
                 android:title="My Information" />
             <item
                 android:id="@+id/logout"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_keyboard_return_black_24dp"
                 android:title="Logout" />
         </menu>
     </item>

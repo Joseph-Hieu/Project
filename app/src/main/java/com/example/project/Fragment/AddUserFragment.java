@@ -160,8 +160,9 @@ public class AddUserFragment extends Fragment {
 
     public void btnInsert(){
         getValues();
-        ((MainActivity) getActivity()).myRef.child(user.getMaNV()).setValue(user);
+        ((MainActivity)getActivity()).myRef.child(user.getMaNV()).setValue(user);
     }
+
 
 
 }

@@ -19,13 +19,12 @@
             android:name="com.example.project.MainActivity"
             android:label="@string/title_activity_main_layout"
             android:theme="@style/AppTheme.NoActionBar">
-
+        </activity>
+        <activity android:name=".LoginActivity" android:label="Login">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
     </application>
 

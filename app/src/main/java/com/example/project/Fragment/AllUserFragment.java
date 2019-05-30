@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project.ItemLongClickListener;
 import com.example.project.MainActivity;
 import com.example.project.R;
 import com.example.project.adapter.MyAdapter;
@@ -53,6 +54,7 @@ public class AllUserFragment extends Fragment {
                              Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.fragment_all_user, container, false);
         setupData();
+
         return view;
     }
 
@@ -66,7 +68,13 @@ public class AllUserFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset);
+        mAdapter = new MyAdapter(myDataset, new ItemLongClickListener() {
+            @Override
+            public void longClickListener(String sMa) {
+                ((MainActivity)getActivity()).myRef.child("User").child(sMa).removeValue();
+                Log.d(getTag(),"Delete " + maNV + " succesfully");
+            }
+        });
         recyclerView.setAdapter(mAdapter);
 
         Query query = ((MainActivity)getActivity()).myRef.orderByChild("sPhongBan").equalTo(phongBan);

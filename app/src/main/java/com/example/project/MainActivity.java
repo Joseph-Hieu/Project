@@ -1,5 +1,7 @@
 package com.example.project;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -174,7 +176,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             showAllUsers("infor");
         }
         else if (id == R.id.logout) {
-            Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+            final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this, R.style.Theme_AppCompat_DayNight_Dialog);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Đăng Xuất!");
+            progressDialog.show();
+            new android.os.Handler().postDelayed(
+                    new Runnable(){
+                        @Override
+                        public void run() {
+                            Intent intent =new Intent(MainActivity.this,LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                            startActivity(intent);
+                        }
+                    }
+                    , 2000);
         }
 
         if (fragment != null){
