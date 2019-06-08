@@ -3,6 +3,7 @@ package com.example.project;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.storage.StorageManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +36,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ImageView imageAvatar;
     byte[] bytes;
+   public StorageReference storageReference;
 
 //    EditText  tenNV, email, maNV, noiO, soDT;
 //    Spinner phongBan, bangCap, gioiTinh;
@@ -200,5 +203,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 
 }

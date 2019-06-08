@@ -1,6 +1,7 @@
 package com.example.project.Fragment;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -23,11 +24,16 @@ import androidx.fragment.app.Fragment;
 import com.example.project.MainActivity;
 import com.example.project.R;
 import com.example.project.object.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.List;
 
 import gun0912.tedbottompicker.TedBottomPicker;
@@ -96,6 +102,7 @@ public class AddUserFragment extends Fragment {
                             public void onImageSelected(Uri uri) {
                                 // here is selected image uri
                                 // upload image
+                                upLoadImg(uri.getPath());
                             }
                         });
             }
@@ -106,6 +113,7 @@ public class AddUserFragment extends Fragment {
                         public void onImageSelected(Uri uri) {
                             // here is selected image uri
                             // upload image
+                            upLoadImg(uri.getPath());
                         }
                     });
         }
@@ -166,6 +174,40 @@ public class AddUserFragment extends Fragment {
         getActivity().onBackPressed();
     }
 
+    private void upLoadImg(String path){
+
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Uploading...");
+        progressDialog.show();
+
+        if (path == null || path.isEmpty()){
+            return;
+        }
+
+
+        Uri file = Uri.fromFile(new File(path));
+        StorageReference riversRef = ((MainActivity) getActivity()).storageReference.child("images"+file.getLastPathSegment());
+
+        riversRef.putFile(file)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get a URL to the uploaded content
+                        Uri downloadUrl = taskSnapshot.getUploadSessionUri();
+                        progressDialog.dismiss();
+                        Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        // ...
+                        progressDialog.dismiss();
+                        Toast.makeText(getContext(), "Failed "+exception.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 
 
 }

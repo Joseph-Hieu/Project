@@ -51,6 +51,7 @@
             android:id="@+id/edtEmail"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:text="admin@gmail.com"
             android:hint="Email"/>
 
         <EditText
